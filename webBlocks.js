@@ -11,7 +11,7 @@ class WebBlocks {
             "blocks": [{
                 "opcode": "fetch",
                 "blockType": "reporter",
-                "text": "fetch data from [url]",
+                "text": "fetch data from url [url]",
                 "arguments": {
                     "url": {
                         "type": "string",
@@ -37,7 +37,7 @@ class WebBlocks {
             {
                 "opcode": "http",
                 "blockType": "reporter",
-                "text": "send an http request to [url] with a method of [method]",
+                "text": "send an http request to [url] with a method of [method] and a body of [body]",
                 "arguments": {
                     "url": {
                         "type": "string",
@@ -46,6 +46,10 @@ class WebBlocks {
                     "method": {
                         "type": "string",
                         "menu": "httpMethods"
+                    },
+                    "body": {
+                        "type": "string",
+                        "defaultValue": ""
                     }
                 }
             },
@@ -105,7 +109,11 @@ class WebBlocks {
     }
 
     fetch({url}) {
-        return fetch(url).then(response => response.text())
+        try {
+            return fetch(url).then(response => response.text())
+        } catch (error) {
+            return ""
+        }
     }
 
     extract({key, json}) {
@@ -124,7 +132,7 @@ class WebBlocks {
         }
     }
 
-    async http({method, url}) {
+    async http({method, url, body}) {
         let promise = new Promise((resolve, reject) => {
             const request = new XMLHttpRequest()
 
@@ -137,9 +145,15 @@ class WebBlocks {
             request.addEventListener("error", () => {
                 resolve("error")
             })
-    
+            
+            try {
+                body = body === "" ? null : JSON.parse(body)
+            } catch (error) {
+                body = null
+            }
+
             request.open(method, url)
-            request.send()
+            request.send(body)
         })
 
         let result = "error"
@@ -155,23 +169,52 @@ class WebBlocks {
         try {
             return '{"' + key + '": ' + value + "}"
         } catch (error) {
-            return ""
+            return "{}"
         }
     }
 
     joinJson({json1, json2}) {
-        var parse1 = JSON.parse(json1)
-        var parse2 = JSON.parse(json2)
-
-        const keys = Object.keys(parse2)
-
-        var out = parse1
-        for (let i = 0; i < keys.length; i++) {
-            const key = keys[i];
-            out[key] = parse2[key]
+        var parse1 = {}
+        try {
+            parse1 = JSON.parse(json1)
+        } catch (error) {
+            var tmpParse2 = {}
+            try {
+                tmpParse2 = JSON.parse(json2)
+            } catch (error) {
+                tmpParse2 = parse1
+            }
+            parse1 = Array.isArray(tmpParse2) ? [] : {}
         }
-        
-        return JSON.stringify(out)
+        var parse2 = {}
+        try {
+            parse2 = JSON.parse(json2)
+        } catch (error) {
+            parse2 = Array.isArray(parse1) ? [] : {}
+        }
+
+        if (((!Array.isArray(parse1)) && (Array.isArray(parse2))) || ((Array.isArray(parse1)) && (!Array.isArray(parse2)))) {
+            return "error"
+        }
+
+        if ((!Array.isArray(parse1)) && (!Array.isArray(parse2))) {
+            const keys = Object.keys(parse2)
+
+            var out = parse1
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i];
+                out[key] = parse2[key]
+            }
+            
+            return JSON.stringify(out)
+        } else {
+            var out = parse1
+            for (let i = 0; i < parse2.length; i++) {
+                out.push(parse2[i])
+            }
+            
+            return JSON.stringify(out)
+        }
     }
 }
 
