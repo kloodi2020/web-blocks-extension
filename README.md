@@ -22,15 +22,15 @@ You can replace the station if you want.
 
 # Extension Reference
 
-![image](https://github.com/user-attachments/assets/11d1cd50-1b59-4357-bd01-b3f57991cd99)
+![image](https://github.com/user-attachments/assets/b25b44d7-3e1f-4e86-92af-b8d543349e3c)
 
 Fetches data from a URL.
-When testing, I found that it usually does the same action as sending a GET HTTP request.
+When testing, I found that it usually does the same action as sending a GET HTTP request,
 Just without the body.
 
-![image](https://github.com/user-attachments/assets/dceb76d4-910e-4b69-8587-65e241e866d0)
+![image](https://github.com/user-attachments/assets/88aa35d8-2c38-4591-b15a-8cc897cbe36f)
 
-Sends an HTTP request to a URL, With a specific method and body.
+Sends an HTTP request to a URL, With a specific method and body, And returns the response.
 
 ![image](https://github.com/user-attachments/assets/2cfa2376-c899-4a1d-8961-a0a2c54cad17)
 
@@ -41,7 +41,7 @@ The whole reason you can read JSON strings at all is with this block.
 
 Creates a JSON string that contains a key and a value.
 
-![image](https://github.com/user-attachments/assets/836f4590-b123-469d-bf90-c10710b08726)
+![image](https://github.com/user-attachments/assets/8f4b249b-607c-4296-b45d-1b006e73f017)
 
 Adds the keys and values of two JSON strings together. Useful if you want to create JSON strings with multiple values.
 If both JSON contain the same key, The value of the second JSON will overwrite the first JSON.
