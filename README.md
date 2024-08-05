@@ -51,6 +51,7 @@ If both JSON contain the same key, The value of the second JSON will overwrite t
 Gets the code from the last HTTP request.
 
 ## HTTP Codes
+```
 1xx: Information
 100 = Continue
 101 = Switching Protocols
@@ -102,3 +103,4 @@ Gets the code from the last HTTP request.
 504 = Gateway Timeout
 505 = HTTP Version Not Supported
 511 = Network Authentication Required
+```
