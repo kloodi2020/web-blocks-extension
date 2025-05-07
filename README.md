@@ -4,7 +4,7 @@ Have you ever wished to be able to do web things in your scratch project?
 Well, Wish no longer! This scratch extension lets you do just that!
 
 For a quick start, Go to your favorite scratch mod that has custom extension support!
-Then put in this URL: https://kloodi2020.github.com/webBlocks.js, And it will do its thing!
+Then put in this URL: https://kloodi2020.github.io/webBlocks.js, And it will do its thing!
 And then you can start using it's blocks! If you don't understand a certain block, You can always count on this README to tell you!
 
 Okay, Now that we are done with that, Let's get started!
